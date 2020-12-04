@@ -2,6 +2,7 @@
 // import "./App.css";
 
 import { Link, NavLink, Redirect, Route, Router, Switch } from "react-router-dom";
+import NotFound from "./components/NotFound";
 import AlbumFeature from "./features/Album";
 import TodoFeature from "./features/Todo";
 
@@ -20,8 +21,10 @@ function App() {
         <Redirect from="/post-list/:postId" to="/post/:postId" exact/>
 
       <Route path="/" component={TodoFeature} exact/>
-      <Route path="/todos" component={TodoFeature} />
+      <Route path="/todo" component={TodoFeature} />
       <Route path="/album" component={AlbumFeature} />
+
+      <Route  component={NotFound}/>
       </Switch>
     </div>
   );
