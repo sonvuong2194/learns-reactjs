@@ -1,30 +1,45 @@
+/* eslint-disable no-unused-vars */
 // import logo from "./logo.svg";
 // import "./App.css";
 
-import { Link, NavLink, Redirect, Route, Router, Switch } from "react-router-dom";
-import NotFound from "./components/NotFound";
-import AlbumFeature from "./features/Album";
-import TodoFeature from "./features/Todo";
+import { useEffect } from 'react';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
+import productApi from './api/productApi';
+import NotFound from './components/NotFound';
+import AlbumFeature from './features/Album';
+import TodoFeature from './features/Todo';
 
 function App() {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const params = {
+        _limit: '10',
+      };
+      const productList = await productApi.getAll(params);
+      console.log(productList);
+    };
+    fetchProducts();
+  }, []);
   return (
     <div className="App ">
       <h1>Home Page</h1>
 
-
-      <p><NavLink to="/todos">Todos</NavLink></p>
-      <p><NavLink to="/album" activeClassName="Son dang o day">Album</NavLink></p>
-      
+      <p>
+        <Link to="/todo">Todos</Link>
+      </p>
+      <p>
+        <Link to="/album">Album</Link>
+      </p>
 
       <Switch>
-        <Redirect from="/home" to="/" exact/>
-        <Redirect from="/post-list/:postId" to="/post/:postId" exact/>
+        <Redirect from="/home" to="/" exact />
+        <Redirect from="/post-list/:postId" to="/post/:postId" exact />
 
-      <Route path="/" component={TodoFeature} exact/>
-      <Route path="/todo" component={TodoFeature} />
-      <Route path="/album" component={AlbumFeature} />
+        <Route path="/" component={TodoFeature} exact />
+        <Route path="/todo" component={TodoFeature} />
+        <Route path="/album" component={AlbumFeature} />
 
-      <Route  component={NotFound}/>
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
